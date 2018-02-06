@@ -1,19 +1,21 @@
+#!/bin/sh
 # genman.sh
 # script to generate man files from executables' --help options,
 # using help2man.
 # Tested on Dash, should work with other POSIX shells.
 
-# Put this script in the package source debian/ directory,
-# add a file genman-list, <packagename>.genman-list
-# or <packagename>.<section-number>.genman-list
+# Put this script in the package source debian/ directory
+# (or some other location, to taste),
+# add a file debian/genman-list, debian/<packagename>.genman-list
+# or debian/<packagename>.<section-number>.genman-list
 # with a list of the executables whose manpages are to be built.
 # Shell globs may be used.
 # If set, <section-number> determines the manual section,
-# otherwise section 1 is used by default .
+# otherwise section 1 is used by default.
 # Multiple genman-list files can be used, for source building
 # multiple packages, or for different manual sections.
 #
-# Built manpages will be put in debian/genman-pages, and
+# Built manpages will be put in debian/genman-pages/, and
 # their paths will be appended to an existing debian/*manpages file,
 # or put in a new manpages or <packagename>.manpages file.
 #
@@ -21,24 +23,18 @@
 #
 # Run the script manually before building the package,
 # or to auto-run, add this to debian/rules:
-#
+# (adjust the path to genman.sh if necessary)
+###
 #override_dh_installman:
-#	sh debian/genman.sh
+#	debian/genman.sh
 #	dh_installman
 #
 #override_dh_clean:
 #	dh_clean
-#	sh debian/genman.sh --clean
+#	debian/genman.sh --clean
 #
 
 set -e
-
-src_name=$(dpkg-parsechangelog -S Source) || {
-    echo "$0: Not in debian source directory?" >&2
-    exit 1
-}
-pkg_ver=$(dpkg-parsechangelog -S Version)
-workdir=debian # Should match the path set in debian/rules.
 
 # default if genman-list has no digit in name
 default_section=1
@@ -57,13 +53,55 @@ The BunsenLabs forums may be able to answer your questions
 https://forums.bunsenlabs.org
 "
 
+HELP="    genman.sh: generate man pages from executables \"--help\" options
+Options:
+    --clean     Return everything in the package debian/ directory
+                to the state it was in before running the script.
+    -h --help   Show this message.
+
+This is a wrapper script around help2man which automates the
+generation of simple man pages from the output of the \"--help\" option,
+along with information from dpkg,
+and configuration files in the package source debian/ directory.
+
+CONFIGURATION:
+
+ The script will look for files in debian/:
+ <packagename>.<section>.genman-list
+ <packagename>.genman-list
+ genman-list
+ If <section> ([1-8]) is missing, assume 1.
+ If <packagename> is also missing, get from dpkg.
+ The file should have a list of the executables
+ (paths relative to the package root) whose manpages are to be built.
+ Shell globs may be used.
+ Multiple genman-list files can be used, for source building
+ multiple packages, or for different manual sections.
+
+Built manpages will be put in debian/genman-pages/, and
+their paths will be appended to an existing debian/*manpages file,
+or put in a new manpages or <packagename>.manpages file.
+
+The script can be located anywhere, but should be run
+from the package source root directory.
+Run it manually before building the package,
+or to auto-run, add this to debian/rules:
+(adjust the path to genman.sh if necessary)
+
+override_dh_installman:
+	debian/genman.sh
+	dh_installman
+
+override_dh_clean:
+	dh_clean
+	debian/genman.sh --clean
+
+"
+
 ### it may not be necessary to edit below this line ###
 
-pkg_name="$src_name"
-manpg_dir="${workdir}"/genman-pages
-mkdir -p "$manpg_dir"
-
-include_file="${workdir}"/genman.include
+manpg_dir=debian/genman-pages
+include_file=debian/genman.include
 
 ### functions ###
 
@@ -118,7 +156,20 @@ case $1 in
     done
     exit 0
     ;;
+--help|-h)
+	echo "$HELP"
+	exit 0
+	;;
 esac
+
+src_name=$(dpkg-parsechangelog -S Source) || {
+    echo "$0: Not in debian source directory?" >&2
+    exit 1
+}
+pkg_name="$src_name" # will be replaced if <packagename>.*.genman-list found
+pkg_ver=$(dpkg-parsechangelog -S Version)
+
+mkdir -p "$manpg_dir"
 
 # avoid multiple runs
 [ -f "$include_file" ] && {
