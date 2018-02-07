@@ -5,9 +5,9 @@ This is a wrapper script around help2man which automates the
 generation of simple man pages from the output of the `--help` option
 of executables in a debian package.
 
-It is easily configured in the package source,
-and the man page files can be generated at build time
-and installed to the correct directories.
+It is easily configured in the package source;
+the man page files can be generated at build time
+and will be installed to the correct directories.
 
 ### Options:
     -h --help   Show a help message.

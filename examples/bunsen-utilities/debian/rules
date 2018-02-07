@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#DH_VERBOSE = 1
+
+# main packaging script based on dh7 syntax
+%:
+	dh $@ --with systemd
+
+override_dh_installman:
+	sh debian/genman.sh
+	dh_installman
+
+override_dh_clean:
+	dh_clean
+	sh debian/genman.sh --clean
+
