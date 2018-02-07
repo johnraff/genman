@@ -16,7 +16,7 @@ and will be installed to the correct directories.
 
 ### Configuration:
 
-The script will look for files in the debian/ directory<br>
+The script will look for files in the debian/ directory:<br>
 *packagename*.*section*.genman-list<br>
 *packagename*.genman-list<br>
 or<br>
