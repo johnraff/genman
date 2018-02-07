@@ -96,6 +96,7 @@ override_dh_clean:
 	dh_clean
 	debian/genman.sh --clean
 
+Also add help2man to Build-Depends in debian/control.
 "
 
 ### it may not be necessary to edit below this line ###
