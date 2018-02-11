@@ -1,9 +1,9 @@
 # genman
 Shell script wrapper around help2man
 
-This is a wrapper script around help2man which automates the
-generation of simple man pages from the output of the `--help` option
-of executables in a debian package.
+This is a script for Debian packagers which uses help2man to automate
+the generation of simple man pages from the output of the `--help` option
+of executables in a package.
 
 It is easily configured in the package source;
 the man page files can be generated at build time
@@ -47,6 +47,6 @@ or to auto-run, add this to debian/rules:<br>
 		dh_clean
 		debian/genman.sh --clean
 
-Also add help2man to the source package's Build-Depends in debian/control.
+Also add **help2man** to the source package's **Build-Depends** in debian/control.
 
 
