@@ -219,6 +219,7 @@ done
 # simple option
 if [ "$found_list" != true ] && [ -f debian/genman-list ]
 then
+    section="$default_section"
     manpages_file=debian/manpages
     build_mans debian/genman-list
 fi
