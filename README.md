@@ -13,6 +13,9 @@ and will be installed to the correct directories.
     -h --help   Show a help message.
     --clean     Return everything in the package debian/ directory
                 to the state it was in before running the script.
+    --test <file>
+                Display the manpage that would be generated for this file.
+                Nothing is changed in the source directory.
 
 ### Configuration:
 
