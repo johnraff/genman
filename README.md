@@ -44,7 +44,7 @@ The script should be run from the package source root directory.
 Run it manually before building the package,
 or to auto-run, add this to debian/rules:<br>
 (adjust the path to genman.sh if necessary)
-
+```
 override_dh_installman:
 	debian/genman.sh
 	dh_installman
@@ -52,7 +52,7 @@ override_dh_installman:
 override_dh_clean:
 	dh_clean
 	debian/genman.sh --clean
-
+```
 Also add **help2man** to the source package's **Build-Depends** in debian/control.
 
 
