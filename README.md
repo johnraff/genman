@@ -16,6 +16,9 @@ and will be installed to the correct directories.
     --test <file>
                 Display the manpage that would be generated for this file.
                 Nothing is changed in the source directory.
+    --makeone <file>
+                Generate a single man file for this one executable and
+                place it in the working directory (package source root).
 
 ### Configuration:
 
@@ -42,13 +45,13 @@ Run it manually before building the package,
 or to auto-run, add this to debian/rules:<br>
 (adjust the path to genman.sh if necessary)
 
-	override_dh_installman:
-		debian/genman.sh
-		dh_installman
+override_dh_installman:
+	debian/genman.sh
+	dh_installman
 
-	override_dh_clean:
-		dh_clean
-		debian/genman.sh --clean
+override_dh_clean:
+	dh_clean
+	debian/genman.sh --clean
 
 Also add **help2man** to the source package's **Build-Depends** in debian/control.
 
