@@ -12,14 +12,18 @@ and will be installed to the correct directories.
 ### Options:
     <no arguments>
                 Generate the necessary files in the source directory.
+
     --clean     Return everything in the package debian/ directory
                 to the state it was in before running the script.
+
     --test <executable>
                 Display the manpage that would be generated for this file.
                 Nothing is changed in the source directory.
+
     --makeone <executable>
                 Generate a single man file for this one executable and
                 place it in the working directory (package source root).
+
     -h --help   Show a help message.
 
 ### Configuration:
