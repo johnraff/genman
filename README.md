@@ -11,7 +11,7 @@ and will be installed to the correct directories.
 
 ### Options:
     <no arguments>
-		Generate the necessary files in the source directory.
+                Generate the necessary files in the source directory.
     --clean     Return everything in the package debian/ directory
                 to the state it was in before running the script.
     --test <executable>
