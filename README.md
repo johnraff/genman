@@ -16,13 +16,25 @@ and will be installed to the correct directories.
     --clean     Return everything in the package debian/ directory
                 to the state it was in before running the script.
 
-    --test <executable>
+    --test <executable> [extra arguments]
                 Display the manpage that would be generated for this file.
                 Nothing is changed in the source directory.
 
-    --makeone <executable>
+    --makeone <executable> [extra arguments]
                 Generate a single man file for this one executable and
                 place it in the working directory (package source root).
+                
+            	Any extra arguments to --test or --makeone will be
+            	passed directly to help2man.
+            	This might be useful eg if a particular executable
+            	accepts only short options, using --help-option='-h'
+            	
+            	EXAMPLE:
+            	debian/genman.sh --makeone bin/bl-recent-files-pipemenu --help-option=-h
+            	This will generate bl-recent-files-pipemenu.1 in the root folder
+            	which can be added to debian/bunsen-pipemenus.manpages
+            	If genman.sh is run afterwards it will generate the other man pages
+            	while ignoring bl-recent-files-pipemenu.1
 
     -h --help   Show a help message.
 
